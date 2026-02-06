@@ -21,6 +21,10 @@
   --font-small: 10px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .typo-title {
   font-weight: bold;
   line-height: 100%;
@@ -63,6 +67,14 @@
   font-size: var(--font-small);
 }
 
-* {
-  box-sizing: border-box;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  border: 0;
+  clip: rect(0 0 0 0);
 }
