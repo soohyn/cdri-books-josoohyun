@@ -15,6 +15,10 @@ const BookListItemContainer = ({
 }: BookListItemContainerProps) => {
   const [isDetail, setIsDetail] = useState(false);
 
+  const salePrice =
+    item.sale_price === -1 ? null : item.sale_price.toLocaleString();
+  const price = item.price.toLocaleString();
+
   const handleClickDetail = () => {
     setIsDetail((prev) => !prev);
   };
@@ -28,8 +32,8 @@ const BookListItemContainer = ({
       <BookListItemDetail
         title={item.title}
         author={item.authors.join(", ")}
-        price={item.price}
-        salePrice={item.sale_price}
+        price={price}
+        salePrice={salePrice}
         contents={item.contents}
         isLike={isLike}
         thumbnail={item.thumbnail}
@@ -44,7 +48,7 @@ const BookListItemContainer = ({
     <BookListItem
       title={item.title}
       author={item.authors.join(", ")}
-      price={item.sale_price}
+      price={salePrice ?? price}
       thumbnail={item.thumbnail}
       handleClickDetail={handleClickDetail}
       handleClickPurchase={handleClickPurchase}

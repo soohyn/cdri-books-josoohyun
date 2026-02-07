@@ -6,8 +6,8 @@ interface BookListItemDetailProps {
   thumbnail: string;
   contents: string;
   author: string;
-  price: number;
-  salePrice: number;
+  price: string;
+  salePrice: string | null;
   isLike: boolean;
   onClickLike: (item: string) => void;
   handleClickDetail: () => void;
