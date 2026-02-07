@@ -1,15 +1,23 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import BookListItem from "../components/BookListItem";
 import SearchBox from "../components/SearchBox";
 import SearchCountText from "../components/SearchCountText";
 import { useQuery } from "@tanstack/react-query";
 import { requestBooks } from "../api/book";
 import NoData from "../components/NoData";
+import BookListItemDetail from "../components/BookListItemDetail";
 
 const SEARCH_HISTORY_KEY = "search-history";
+const LIKE_KEY = "like";
 
 const getStorageHistory = () => {
-  const storageData: string = localStorage.getItem(SEARCH_HISTORY_KEY) ?? "";
+  const storageData: string = localStorage.getItem(SEARCH_HISTORY_KEY) ?? "[]";
+
+  return JSON.parse(storageData);
+};
+
+const getStorageLike = () => {
+  const storageData: string = localStorage.getItem(LIKE_KEY) ?? "[]";
 
   return JSON.parse(storageData);
 };
@@ -19,6 +27,7 @@ function Search() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchHistory, setSearchHistory] =
     useState<string[]>(getStorageHistory);
+  const [like, setLike] = useState<string[]>(getStorageLike);
 
   const { data } = useQuery({
     queryKey: ["books", searchQuery],
@@ -27,6 +36,10 @@ function Search() {
 
   const setStorageHistory = (searchHistory: string[]) => {
     localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(searchHistory));
+  };
+
+  const setStorageLike = (like: string[]) => {
+    localStorage.setItem(LIKE_KEY, JSON.stringify(Array.from(like)));
   };
 
   const addSearchHistory = (searchQuery: string) => {
@@ -55,9 +68,20 @@ function Search() {
     setSearchQuery(history);
   };
 
+  const handleClickLike = (item: string) => {
+    setLike((prev) => {
+      if (prev.includes(item)) return prev.filter((item) => item !== item);
+      else return [...prev, item];
+    });
+  };
+
   useEffect(() => {
     setStorageHistory(searchHistory);
   }, [searchHistory]);
+
+  useEffect(() => {
+    setStorageLike(like);
+  }, [like]);
 
   return (
     <main>
@@ -86,12 +110,24 @@ function Search() {
         {(data?.meta.total_count ?? 0 > 0) ? (
           data?.documents.map((item, index) => {
             return (
-              <BookListItem
-                key={item.title + index}
-                title={item.title}
-                author={item.authors.join(", ")}
-                price={item.sale_price}
-              />
+              <Fragment key={item.title + index}>
+                <BookListItem
+                  title={item.title}
+                  author={item.authors.join(", ")}
+                  price={item.sale_price}
+                  thumbnail={item.thumbnail}
+                />
+                <BookListItemDetail
+                  title={item.title}
+                  author={item.authors.join(", ")}
+                  price={item.price}
+                  salePrice={item.sale_price}
+                  contents={item.contents}
+                  isLike={like.includes(item.title)}
+                  thumbnail={item.thumbnail}
+                  onClickLike={handleClickLike}
+                />
+              </Fragment>
             );
           })
         ) : (
