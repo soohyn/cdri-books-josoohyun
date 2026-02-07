@@ -1,5 +1,9 @@
 type Status = string | "정상판매";
 
+type Sort = "accuracy" | "latest";
+
+type Target = "title" | "isbn" | "pulisher" | "person";
+
 interface Meta {
   total_count: number;
   pageable_count: number;

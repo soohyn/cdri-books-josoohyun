@@ -1,9 +1,5 @@
 const KAKAO_REQUEST_URL = "https://dapi.kakao.com/v3/search/book";
 
-type Sort = "accuracy" | "latest";
-
-type Target = "title" | "isbn" | "pulisher" | "person";
-
 interface RequestBooksParams {
   query: string;
   sort?: Sort;
