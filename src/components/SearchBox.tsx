@@ -9,12 +9,20 @@ import {
 import Button from "./Button";
 
 interface SearchBoxProps {
+  selectValue: Target | null;
   inputValue: string;
   setInputValue: Dispatch<SetStateAction<string>>;
+  setSelectValue: Dispatch<SetStateAction<Target | null>>;
   onSearch: () => void;
 }
 
-const SearchBox = ({ inputValue, setInputValue, onSearch }: SearchBoxProps) => {
+const SearchBox = ({
+  inputValue,
+  selectValue,
+  setSelectValue,
+  setInputValue,
+  onSearch,
+}: SearchBoxProps) => {
   const id = useId();
   const [openDetailSearch, setOpenDetailSearch] = useState(false);
 
@@ -30,6 +38,7 @@ const SearchBox = ({ inputValue, setInputValue, onSearch }: SearchBoxProps) => {
 
   const handleOpenDetailSearch = () => {
     setOpenDetailSearch((prev) => !prev);
+    setInputValue("");
   };
 
   return (
@@ -41,9 +50,10 @@ const SearchBox = ({ inputValue, setInputValue, onSearch }: SearchBoxProps) => {
         </label>
         <input
           id={id}
+          name="query"
           placeholder="검색어 입력"
           type="text"
-          value={inputValue}
+          value={openDetailSearch ? "" : inputValue}
           onChange={handleChangeinputValue}
         />
       </form>
@@ -53,12 +63,23 @@ const SearchBox = ({ inputValue, setInputValue, onSearch }: SearchBoxProps) => {
       </button>
       {openDetailSearch && (
         <form onSubmit={handleSubmit}>
-          <select aria-label="상세 검색 항목">
+          <select
+            name="target"
+            aria-label="상세 검색 항목"
+            value={selectValue ?? undefined}
+            onChange={(e) => setSelectValue(e.target.value as Target)}
+          >
             <option value="title">제목</option>
-            <option value="ahthor">저자명</option>
+            <option value="person">저자명</option>
             <option value="publisher">출판사</option>
           </select>
-          <input placeholder="검색어 입력" aria-label="상세 검색어" />
+          <input
+            name="query"
+            placeholder="검색어 입력"
+            aria-label="상세 검색어"
+            value={inputValue}
+            onChange={handleChangeinputValue}
+          />
           <Button type="submit" label="검색하기" aria-label="상세 검색하기" />
         </form>
       )}

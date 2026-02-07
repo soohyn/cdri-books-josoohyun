@@ -24,14 +24,16 @@ const getStorageLike = () => {
 
 function Search() {
   const [inputValue, setInputValue] = useState("");
+  const [selectValue, setSelectValue] = useState<Target | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchTarget, setSearchTarget] = useState<Target | null>(null);
   const [searchHistory, setSearchHistory] =
     useState<string[]>(getStorageHistory);
   const [likes, setLikes] = useState<string[]>(getStorageLike);
 
   const { data } = useQuery({
     queryKey: ["books", searchQuery],
-    queryFn: () => requestBooks({ query: searchQuery }),
+    queryFn: () => requestBooks({ query: searchQuery, target: searchTarget ?? undefined }),
   });
 
   const setStorageHistory = (searchHistory: string[]) => {
@@ -60,6 +62,7 @@ function Search() {
 
   const handleOnSearch = () => {
     setSearchQuery(inputValue);
+    setSearchTarget(selectValue);
     addSearchHistory(inputValue);
   };
 
@@ -89,7 +92,9 @@ function Search() {
         <h1>Search</h1>
         <SearchBox
           inputValue={inputValue}
+          selectValue={selectValue}
           setInputValue={setInputValue}
+          setSelectValue={setSelectValue}
           onSearch={handleOnSearch}
         />
         {searchHistory.reverse().map((item, index) => {
