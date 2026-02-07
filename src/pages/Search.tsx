@@ -119,7 +119,7 @@ function Search() {
             );
           })
         ) : (
-          <NoData />
+          <NoData message="검색된 결과가 없습니다." />
         )}
       </section>
     </main>

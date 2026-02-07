@@ -1,10 +1,14 @@
 import IconBook from "../assets/icon_book.png";
 
-const NoData = () => {
+interface NodataProps {
+  message?: string;
+}
+
+const NoData = ({ message = "" }: NodataProps) => {
   return (
     <section>
       <img src={IconBook} alt="" />
-      <p>검색된 결과가 없습니다</p>
+      <p>{message}</p>
     </section>
   );
 };
