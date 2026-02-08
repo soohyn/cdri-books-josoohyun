@@ -18,13 +18,38 @@ const BookListItem = ({
   handleClickPurchase,
 }: BookListItemProps) => {
   return (
-    <article>
-      <img src={thumbnail} alt={title} aria-hidden={true} />
-      <h3>{title}</h3>
-      <span aria-label="작가">{author}</span>
-      <span>{price}원</span>
-      <Button label="구매하기" onClick={handleClickPurchase} />
-      <Button label="상세보기" onClick={handleClickDetail} />
+    <article className="flex items-center py-6 gap-8">
+      <img
+        src={thumbnail}
+        className="w-12 object-cover ml-8"
+        alt={title}
+        aria-hidden={true}
+      />
+      <div
+        role="group"
+        className="flex flex-1 items-center gap-3 overflow-x-hidden"
+      >
+        <h3 className="typo-title typo-title-3 overflow-hidden text-ellipsis whitespace-nowrap">
+          {title}
+        </h3>
+        <span
+          aria-label="작가"
+          className="typo-body typo-body-2 text-text-secondary text-ellipsis overflow-hidden whitespace-nowrap"
+        >
+          {author}
+        </span>
+      </div>
+      <span aria-label="가격" className="typo-title typo-title-3">
+        {price}원
+      </span>
+      <div role="group" className="flex gap-1 mr-4">
+        <Button label="구매하기" onClick={handleClickPurchase} />
+        <Button
+          label="상세보기"
+          variant="tertiary"
+          onClick={handleClickDetail}
+        />
+      </div>
     </article>
   );
 };
