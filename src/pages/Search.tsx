@@ -13,7 +13,7 @@ const SEARCH_HISTORY_KEY = "search-history";
 const getStorageHistory = () => {
   const storageData: string = localStorage.getItem(SEARCH_HISTORY_KEY) ?? "[]";
 
-  return JSON.parse(storageData);
+  return JSON.parse(storageData) ?? [];
 };
 
 function Search() {
@@ -55,6 +55,7 @@ function Search() {
   };
 
   const handleOnSearch = () => {
+    if (!inputValue) return;
     setSearchQuery(inputValue);
     setSearchTarget(selectValue);
     addSearchHistory(inputValue);
@@ -83,21 +84,11 @@ function Search() {
           setInputValue={setInputValue}
           setSelectValue={setSelectValue}
           onSearch={handleOnSearch}
+          searchHistory={searchHistory}
+          deleteSearchHistory={deleteSearchHistory}
+          handleClickHistory={handleClickHistory}
         />
-        {searchHistory.reverse().map((item, index) => {
-          return (
-            <div key={item + index}>
-              <span onClick={() => handleClickHistory(item)}>{item}</span>
-              <button
-                onClick={() => {
-                  deleteSearchHistory(item);
-                }}
-              >
-                x
-              </button>
-            </div>
-          );
-        })}
+
         <SearchCountText count={data?.meta.total_count ?? 0} />
         {(data?.meta.total_count ?? 0 > 0) ? (
           data?.documents.map((item, index) => {
