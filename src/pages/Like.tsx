@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import BookListItemContainer from "../components/BookListItemContainer";
+import BookListItemContainer from "../components/book/BookListItemContainer";
 import NoData from "../components/NoData";
 import { useLikeStorage } from "../hooks/useLikeStorage";
 

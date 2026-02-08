@@ -1,5 +1,5 @@
-import Fill from "../assets/fill.svg";
-import Like from "../assets/line.svg";
+import Fill from "../../assets/fill.svg";
+import Like from "../../assets/line.svg";
 
 interface BookListItemDetailProps {
   title: string;

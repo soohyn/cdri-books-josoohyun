@@ -5,7 +5,7 @@ import SearchCountText from "../components/SearchCountText";
 import { useQuery } from "@tanstack/react-query";
 import { requestBooks } from "../api/book";
 import NoData from "../components/NoData";
-import BookListItemContainer from "../components/BookListItemContainer";
+import BookListItemContainer from "../components/book/BookListItemContainer";
 import { useLikeStorage } from "../hooks/useLikeStorage";
 
 const SEARCH_HISTORY_KEY = "search-history";
