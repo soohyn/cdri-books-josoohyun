@@ -25,9 +25,12 @@
   --font-small: 10px;
 }
 
+body {
+  color: var(--color-text-primary);
+}
+
 * {
   box-sizing: border-box;
-  color: var(--color-text-primary);
 }
 
 .typo-title {
@@ -60,7 +63,7 @@
   font-size: var(--font-body-2);
 }
 
-.typo-bold{
+.typo-bold {
   font-weight: bold;
 }
 

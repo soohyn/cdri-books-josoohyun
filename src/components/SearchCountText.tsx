@@ -4,10 +4,10 @@ interface SearchCountTextProps {
 
 const SearchCountText = ({ count }: SearchCountTextProps) => {
   return (
-    <section>
-      <span>도서 검색 결과</span>
+    <section className="flex flex-row gap-4">
+      <span className="typo-caption">도서 검색 결과</span>
       <span>
-        총<strong>{count}</strong>건
+        총 <strong className="typo-caption font-medium text-palette-primary">{count}</strong>건
       </span>
     </section>
   );
