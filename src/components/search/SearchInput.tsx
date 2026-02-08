@@ -26,7 +26,7 @@ const SearchInput = ({
         <img src={Search} alt="" aria-hidden={true} />
         <input
           id={id}
-          className="outline-none placeholder:text-text-subtilte"
+          className="outline-none placeholder:text-text-subtitle"
           name="query"
           placeholder="검색어 입력"
           type="text"
