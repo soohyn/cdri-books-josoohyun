@@ -1,5 +1,6 @@
 import Fill from "../../assets/fill.svg";
 import Like from "../../assets/line.svg";
+import Button from "../Button";
 
 interface BookListItemDetailProps {
   title: string;
@@ -27,22 +28,58 @@ const BookListItemDetail = ({
   handleClickPurchase,
 }: BookListItemDetailProps) => {
   return (
-    <article>
-      <img src={thumbnail} alt={title} aria-hidden={true} />
-      <button onClick={() => onClickLike(title)}>
-        <img src={isLike ? Fill : Like} />
-      </button>
-      <h3>{title}</h3>
-      <span>{author}</span>
-      <p>{contents}</p>
-      <button type="button" onClick={handleClickDetail}>
-        상세보기
-      </button>
-      <span>원가 {price}</span>
-      {salePrice && <span>할인가 {salePrice}</span>}
-      <button type="button" onClick={handleClickPurchase}>
-        구매하기
-      </button>
+    <article className="flex gap-6 py-4">
+      <div role="figure" className="flex shirink-0 relative ml-4">
+        <img
+          src={thumbnail}
+          className="h-70 object-cover"
+          alt={title}
+          aria-hidden={true}
+        />
+        <button
+          onClick={() => onClickLike(title)}
+          className="absolute top-1 right-1"
+        >
+          <img src={isLike ? Fill : Like} />
+        </button>
+      </div>
+      <div role="group" className="flex flex-1 flex-col gap-2 mt-3">
+        <div role="rowgroup" className="flex items-center gap-3">
+          <h3 className="typo-title typo-title-3">{title}</h3>
+          <span className="typo-caption text-text-subtitle">{author}</span>
+        </div>
+        <span className="typo-body typo-body-2 typo-bold">책 소개</span>
+        <p className="">{contents}</p>
+      </div>
+      <div role="group" className="flex flex-col items-end gap-3 mr-3">
+        <Button
+          label="상세보기"
+          variant="tertiary"
+          className="mb-auto"
+          onClick={handleClickDetail}
+        />
+        <span className="typo-small text-text-subtitle">
+          원가{" "}
+          <strong
+            className={`typo-title-3 text-text-primary ${salePrice ? "line-through font-light" : "typo-title"}`}
+          >
+            {price}
+          </strong>
+        </span>
+        {salePrice && (
+          <span className="typo-small text-text-subtitle">
+            할인가{" "}
+            <strong className="typo-title typo-title-3 text-text-primary">
+              {salePrice}
+            </strong>
+          </span>
+        )}
+        <Button
+          label="구매하기"
+          onClick={handleClickPurchase}
+          className="w-60 mt-3"
+        />
+      </div>
     </article>
   );
 };
