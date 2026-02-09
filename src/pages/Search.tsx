@@ -46,9 +46,9 @@ function Search() {
       const newHistory = prev.filter((item) => item !== searchQuery);
 
       if (newHistory.length >= MAX_HISTORY) {
-        return [...newHistory.slice(1, MAX_HISTORY), searchQuery];
+        return [searchQuery, ...newHistory.slice(0, MAX_HISTORY - 1)];
       } else {
-        return [...newHistory, searchQuery];
+        return [searchQuery, ...newHistory];
       }
     });
   };
