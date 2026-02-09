@@ -67,7 +67,7 @@ function Search() {
   const handleClickHistory = (history: string) => {
     setInputValue(history);
     setSearchQuery(history);
-    addSearchHistory(history)
+    addSearchHistory(history);
   };
 
   const handleClickLike = (item: string) => {
@@ -92,20 +92,26 @@ function Search() {
       />
 
       <CountText label="도서 검색 결과" count={data?.meta.total_count ?? 0} />
-      {(data?.meta.total_count ?? 0 > 0) ? (
-        data?.documents.map((item, index) => {
-          return (
-            <BookListItemContainer
-              key={item.title + index}
-              item={item}
-              isLike={likes.includes(item.title)}
-              handleClickLike={handleClickLike}
-            />
-          );
-        })
-      ) : (
-        <NoData message="검색된 결과가 없습니다." />
-      )}
+      <ul>
+        {(data?.meta.total_count ?? 0 > 0) ? (
+          data?.documents.map((item, index) => {
+            return (
+              <li
+                key={item.title + index}
+                className="not-last:border-b border-b-palette-gray"
+              >
+                <BookListItemContainer
+                  item={item}
+                  isLike={likes.includes(item.title)}
+                  handleClickLike={handleClickLike}
+                />
+              </li>
+            );
+          })
+        ) : (
+          <NoData message="검색된 결과가 없습니다." />
+        )}
+      </ul>
     </section>
   );
 }

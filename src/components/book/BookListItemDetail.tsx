@@ -29,7 +29,7 @@ const BookListItemDetail = ({
   handleClickPurchase,
 }: BookListItemDetailProps) => {
   return (
-    <article className="flex gap-6 py-4 not-last:border-b border-b-palette-gray ">
+    <article className="flex gap-6 py-4 ">
       <div role="figure" className="flex shirink-0 relative ml-4">
         <img
           src={thumbnail}

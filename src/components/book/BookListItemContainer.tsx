@@ -27,24 +27,20 @@ const BookListItemContainer = ({
     window.open(item.url);
   };
 
-  if (isDetail) {
-    return (
-      <BookListItemDetail
-        title={item.title}
-        author={item.authors.join(", ")}
-        price={price}
-        salePrice={salePrice}
-        contents={item.contents}
-        isLike={isLike}
-        thumbnail={item.thumbnail}
-        onClickLike={handleClickLike}
-        handleClickDetail={handleClickDetail}
-        handleClickPurchase={handleClickPurchase}
-      />
-    );
-  }
-
-  return (
+  return isDetail ? (
+    <BookListItemDetail
+      title={item.title}
+      author={item.authors.join(", ")}
+      price={price}
+      salePrice={salePrice}
+      contents={item.contents}
+      isLike={isLike}
+      thumbnail={item.thumbnail}
+      onClickLike={handleClickLike}
+      handleClickDetail={handleClickDetail}
+      handleClickPurchase={handleClickPurchase}
+    />
+  ) : (
     <BookListItem
       title={item.title}
       author={item.authors.join(", ")}
