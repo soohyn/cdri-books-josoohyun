@@ -1,8 +1,4 @@
-import {
-  useQueryClient,
-  type InfiniteData,
-  type QueryKey,
-} from "@tanstack/react-query";
+import { useQueryClient, type InfiniteData } from "@tanstack/react-query";
 import BookListItemContainer from "../components/book/BookListItemContainer";
 import NoData from "../components/NoData";
 import { useLikeStorage } from "../hooks/useLikeStorage";
@@ -16,21 +12,18 @@ function Like() {
   const { likes, toggleLike } = useLikeStorage();
   const queryClient = useQueryClient();
 
-  const data = queryClient.getQueriesData<
-    Array<[QueryKey, InfiniteData<BooksResponse>]>
-  >({
+  const data = queryClient.getQueriesData<InfiniteData<BooksResponse>>({
     queryKey: ["books"],
   });
 
-
- const filteredBooks = data
-  .map((d) =>
-    d[1]?.pages
-      .flatMap((page) => page.documents)
-      .filter((item) => likes.includes(item.title))
-  )
-  .filter((v): v is Document[] => Array.isArray(v))
-  .flat();
+  const filteredBooks = data
+    .map((d) =>
+      d[1]?.pages
+        .flatMap((page) => page.documents)
+        .filter((item) => likes.includes(item.title)),
+    )
+    .filter((v): v is Document[] => Array.isArray(v))
+    .flat();
 
   const itemMap = filteredBooks.map((mapItem, index) => {
     return (
