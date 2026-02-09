@@ -1,4 +1,5 @@
 import Button from "../Button";
+import ArrowDown from "../../assets/icon_arrow_down.svg";
 
 interface BookListItemProps {
   title: string;
@@ -47,6 +48,9 @@ const BookListItem = ({
         <Button
           label="상세보기"
           variant="tertiary"
+          right={
+            <img src={ArrowDown} alt="" aria-hidden={true} className="w-4" />
+          }
           onClick={handleClickDetail}
         />
       </div>

@@ -1,5 +1,6 @@
 import Fill from "../../assets/fill.svg";
 import Like from "../../assets/line.svg";
+import ArrowUp from "../../assets/icon_arrow_up.svg";
 import Button from "../Button";
 
 interface BookListItemDetailProps {
@@ -56,6 +57,9 @@ const BookListItemDetail = ({
           label="상세보기"
           variant="tertiary"
           className="mb-auto"
+          right={
+            <img src={ArrowUp} alt="" aria-hidden={true} className="w-4" />
+          }
           onClick={handleClickDetail}
         />
         <span className="typo-small text-text-subtitle">
