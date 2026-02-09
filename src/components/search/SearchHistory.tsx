@@ -12,13 +12,18 @@ const SearchHistory = ({
   handleClickHistory,
 }: SearchHistoryProps) => {
   return (
-    <ul className="ml-4">
+    <ul
+      className="absolute bg-palette-lightgray rounded-b-3xl pl-12 w-120"
+    >
       {searchHistory.reverse().map((item, index) => {
         return (
-          <li key={item + index} className="flex items-center justify-between px-6 py-1">
+          <li
+            key={item + index}
+            className="flex items-center justify-between pr-6 py-1 w-full"
+          >
             <span
-              onClick={() => handleClickHistory(item)}
-              className="text-text-subtitle"
+              onMouseDown={() => handleClickHistory(item)}
+              className="text-text-subtitle w-full overflow-hidden  text-ellipsis"
             >
               {item}
             </span>
@@ -26,8 +31,12 @@ const SearchHistory = ({
               type="button"
               aria-label="delete history button"
               className="text-text-primary"
-              onClick={() => {
-                deleteSearchHistory(item);
+              onMouseDown={(e) => {
+                e.preventDefault()
+                deleteSearchHistory(item)
+              }}
+              onClick={(e) => {
+                e.preventDefault();
               }}
             >
               <img src={Close} alt="" className="w-6 h-6" aria-hidden={true} />

@@ -25,10 +25,10 @@ const SearchInput = ({
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="relative w-120 max-w-120">
       <label
         htmlFor={id}
-        className={`flex flex-col bg-palette-lightgray ${isFocus ? "rounded-3xl" : "rounded-full"} py-2.5 pl-2.5 w-120 max-w-120`}
+        className={`flex flex-col bg-palette-lightgray ${isFocus ? "rounded-t-3xl" : "rounded-full"} py-2.5 pl-2.5 w-full`}
       >
         <div role="group" className="flex gap-3">
           <span className="sr-only">도서 검색어</span>
@@ -37,22 +37,23 @@ const SearchInput = ({
             id={id}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
-            className="outline-none placeholder:text-text-subtitle"
+            className="outline-none placeholder:text-text-subtitle w-full"
             name="query"
+            autoComplete="off"
             placeholder="검색어 입력"
             type="text"
             value={isOpenDetailSearch ? "" : inputValue}
             onChange={handleChangeinputValue}
           />
         </div>
-        {isFocus && (
-          <SearchHistory
-            searchHistory={searchHistory}
-            deleteSearchHistory={deleteSearchHistory}
-            handleClickHistory={handleClickHistory}
-          />
-        )}
       </label>
+      {isFocus && (
+        <SearchHistory
+          searchHistory={searchHistory}
+          deleteSearchHistory={deleteSearchHistory}
+          handleClickHistory={handleClickHistory}
+        />
+      )}
     </form>
   );
 };
