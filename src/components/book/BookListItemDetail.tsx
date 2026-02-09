@@ -45,7 +45,7 @@ const BookListItemDetail = ({
         </button>
       </div>
       <div role="group" className="flex flex-1 flex-col gap-2 mt-3">
-        <div role="rowgroup" className="flex items-center gap-3">
+        <div role="rowgroup" className="flex items-center gap-3 flex-wrap">
           <h3 className="typo-title typo-title-3">{title}</h3>
           <span className="typo-caption text-text-subtitle">{author}</span>
         </div>
