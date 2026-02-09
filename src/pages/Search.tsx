@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import SearchBox from "../components/search/SearchBox";
 import { requestBooks } from "../api/book";
@@ -28,14 +28,32 @@ function Search() {
     useState<string[]>(getStorageHistory);
   const { likes, toggleLike } = useLikeStorage();
 
-  const { data } = useQuery({
+  const fetchBooks = async ({ pageParam }: { pageParam: number }) => {
+    const response = await requestBooks({
+      query: searchQuery,
+      page: pageParam,
+      target: searchTarget ?? undefined,
+    });
+    return response;
+  };
+
+  const {
+    data: queryData,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
     queryKey: ["books", searchQuery],
-    queryFn: () =>
-      requestBooks({
-        query: searchQuery,
-        target: searchTarget ?? undefined,
-      }),
+    queryFn: fetchBooks,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage.meta.is_end || lastPage.meta.pageable_count === 0)
+        return undefined;
+      return pages.length;
+    },
   });
+
+  const documents = queryData?.pages.flatMap((page) => page.documents) ?? [];
+  const totalCount = queryData?.pages[0].meta.total_count;
 
   const setStorageHistory = (searchHistory: string[]) => {
     localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(searchHistory));
@@ -75,6 +93,22 @@ function Search() {
   };
 
   useEffect(() => {
+    const infinityScrollArea = document.querySelector("#infinite");
+
+    if (!infinityScrollArea) return;
+
+    const intersectionObserver = new IntersectionObserver(async (e) => {
+      if (e[0].isIntersecting && hasNextPage) {
+        fetchNextPage();
+      }
+    });
+
+    intersectionObserver.observe(infinityScrollArea);
+
+    return () => intersectionObserver.disconnect();
+  });
+
+  useEffect(() => {
     setStorageHistory(searchHistory);
   }, [searchHistory]);
 
@@ -91,10 +125,10 @@ function Search() {
         handleClickHistory={handleClickHistory}
       />
 
-      <CountText label="도서 검색 결과" count={data?.meta.total_count ?? 0} />
+      <CountText label="도서 검색 결과" count={totalCount ?? 0} />
       <ul>
-        {(data?.meta.total_count ?? 0 > 0) ? (
-          data?.documents.map((item, index) => {
+        {(totalCount ?? 0 > 0) ? (
+          documents?.map((item, index) => {
             return (
               <li
                 key={item.title + index}
@@ -112,6 +146,7 @@ function Search() {
           <NoData message="검색된 결과가 없습니다." />
         )}
       </ul>
+      <div id="infinite" />
     </section>
   );
 }
