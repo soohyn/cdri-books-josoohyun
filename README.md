@@ -1,6 +1,8 @@
-# Books
+# CDRI Books JoSoohyun
+> CDRI 과제 프로젝트 레포지토리 입니다
 
 ## 프로젝트 개요
+
 
 ## 실행 방법 및 환경 설정
 
