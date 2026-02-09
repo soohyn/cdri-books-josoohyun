@@ -13,9 +13,9 @@ const SearchHistory = ({
 }: SearchHistoryProps) => {
   return (
     <ul
-      className="absolute bg-palette-lightgray rounded-b-3xl pl-12 w-120"
+      className="absolute bg-palette-lightgray rounded-b-3xl pl-12 pb-2 w-120"
     >
-      {searchHistory.map((item, index) => {
+      {searchHistory.length > 0? searchHistory.map((item, index) => {
         return (
           <li
             key={item + index}
@@ -43,7 +43,7 @@ const SearchHistory = ({
             </button>
           </li>
         );
-      })}
+      }): <span className="text-text-subtitle">검색 기록이 없습니다.</span>}
     </ul>
   );
 };
